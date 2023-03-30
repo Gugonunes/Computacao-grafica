@@ -10,14 +10,14 @@ matriz = np.zeros((100,100))
 #incluir pontos iniciais aleatorios com valores aleatorios entre 0 e 5
 for i in range(100):
     for j in range(100):
-        if random.randint(0, 7) == 1:
-            matriz[i][j] = 10
+        if random.randint(0, 100) == 1:
+            matriz[i][j] = random.randint(0, 10)
             #atribua esse valor aos vizinhos também
-            if i > 0 and i < 99 and j > 0 and j < 99:
-                matriz[i-1][j] = 5
-                matriz[i+1][j] = 5
-                matriz[i][j-1] = 5
-                matriz[i][j+1] = 5
+            # if i > 0 and i < 99 and j > 0 and j < 99:
+            #     matriz[i-1][j] = 0.5
+            #     matriz[i+1][j] = 0.5
+            #     matriz[i][j-1] = 0.5
+            #     matriz[i][j+1] = 0.5
 
 def chooseValue(matriz, i, j):
     #verificar se os vizinhos estão dentro da matriz
@@ -34,14 +34,14 @@ def chooseValue(matriz, i, j):
 
         return (valorMenor+valorMaior)/2
     else:
-        return random.randint(0, 1)
+        return 0
 
 def randomWalk():
     for i in range(100):
         for j in range(100):
             matriz[i][j] = chooseValue(matriz, i, j)
 
-for i in range(10):
+for i in range(75):
     randomWalk()
 
 # Cria um grid de coordenadas para a superfície
@@ -58,8 +58,11 @@ ax1.set_title('Imagem')
 
 # Plota a superfície em outra sub-figura
 ax2 = fig.add_subplot(122, projection='3d')
-ax2.plot_surface(x, y, matriz)
+ax2.plot_surface(x, y, matriz, cmap='viridis', edgecolor='black')
 ax2.set_title('Superfície')
+
+# Define os limites do eixo z
+# ax2.set_zlim(-6, 4)
 
 # Exibe a figura com as duas sub-figuras em janelas diferentes, mas ao mesmo tempo
 plt.show()
